@@ -1,3 +1,8 @@
-resource "aws_s3_bucket" "ECS" {
-  bucket = "ECS"
+terraform {
+  backend "s3" {
+    bucket  = "ecs"
+    region  = "us-east-1"
+    key     = "ecs-fargate/terraform.tfstate"
+    encrypt = true
+  }
 }
