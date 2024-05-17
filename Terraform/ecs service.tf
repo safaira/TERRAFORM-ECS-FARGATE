@@ -21,4 +21,3 @@ resource "aws_ecs_service" "ecs_service" {
     subnets          = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
   }
 }
-}

@@ -2,7 +2,7 @@
 resource "aws_ecs_task_definition" "ecs_task" {
   family = "aws_ecs_task_definition-1"
 #  execution_role_arn = 
-  network_mode = "aws_vpc"
+  network_mode = "awsvpc"
 
   container_definitions = jsonencode([
     {
