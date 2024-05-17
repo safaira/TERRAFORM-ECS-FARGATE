@@ -2,7 +2,7 @@ name: CICD
 
 on:
   push:
-    branches: [ deploy-to-ecs-fargate ]
+    branches: [ TERRAFORM-ECS-FARGATE ]
 
 jobs:
   build-and-deploy:
@@ -15,7 +15,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: 'eu-north-1'
+          aws-region: 'ap-south-1'
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
@@ -27,7 +27,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
-          REPOSITORY: nodejs-app
+          REPOSITORY: nodejs image
         run: |
           # Build a docker container and
           # push it to ECR so that it can
@@ -39,13 +39,13 @@ jobs:
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: nodejs-app-task-definition.json 
+          task-definition: nodejs image-task-definition.json 
           container-name: nodejs-app
           image: ${{ steps.build-image.outputs.image }}    
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: nodejs-app-service
-          cluster: DevCluster
+          service: nodejs_hello_world
+          cluster: aws-ecs-cluster
           wait-for-service-stability: true   
