@@ -31,7 +31,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: latest
+          IMAGE_TAG: ${{ github.sha }}
           REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
         run: |
           # Build a docker container and
@@ -52,7 +52,7 @@ jobs:
           task-definition: task-definition.json 
           container-name: Hello-World
           image: ${{ steps.build-image.outputs.image }}   
-           
+
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
