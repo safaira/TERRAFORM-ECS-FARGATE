@@ -4,8 +4,8 @@ on:
   push:
     branches: [ master ]
 
-# env:
-#   ECS_TD: .github/workflows/td.json
+env:
+  ECS_TD: .github/workflows/td.json
 
 jobs:
   build-and-deploy:
@@ -41,15 +41,15 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-      - name: Download task definition
-        run: |
-          aws ecs describe-task-definition --task-definition service --query taskDefinition > task-definition.json
+      # - name: Download task definition
+      #   run: |
+      #     aws ecs describe-task-definition --task-definition service --query taskDefinition > task-definition.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: task-definition.json
+          task-definition: ${{ env.ECS_TD }}
           container-name: Hello-World
           image: ${{ steps.build-image.outputs.image }}   
 
