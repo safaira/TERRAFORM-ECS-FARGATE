@@ -10,7 +10,7 @@ resource "aws_ecs_service" "ecs_service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.lb-tg.arn
     container_name   = "Hello-World"
-    container_port   = 5000
+    container_port   = 3000
   }
 
 

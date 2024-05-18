@@ -4,8 +4,8 @@ on:
   push:
     branches: [ master ]
 
-env:
-  ECS_TD: .github/workflows/td.json
+# env:
+#   ECS_TD: .github/workflows/td.json
 
 jobs:
   build-and-deploy:
