@@ -30,7 +30,7 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REGISTRY: "***.dkr.ecr.ap-south-1.amazonaws.com"
           IMAGE_TAG: ${{ github.sha }}
           REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
         run: |
@@ -40,7 +40,7 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-          
+
       # - name: Download task definition
       #   run: |
       #     aws ecs describe-task-definition --task-definition service --query taskDefinition > task-definition.json
