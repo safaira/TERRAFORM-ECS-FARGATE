@@ -41,9 +41,9 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-      # - name: Download task definition
-      #   run: |
-      #       aws ecs describe-task-definition --task-definition service --query taskDefinition > task-definition.json
+      - name: Download task definition
+        run: |
+            aws ecs describe-task-definition --task-definition service --query taskDefinition > task-definition.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
@@ -51,7 +51,8 @@ jobs:
         with:
           task-definition: task-definition.json
           container-name: Hello-World
-          image: ${{ steps.build-image.outputs.image }}   
+          # image: ${{ steps.build-image.outputs.image }}   
+          image: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/my-repo:latest
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
