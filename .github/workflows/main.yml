@@ -31,8 +31,8 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
           IMAGE_TAG: ${{ github.sha }}
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
         run: |
           # Build a docker container and
           # push it to ECR so that it can
@@ -43,8 +43,7 @@ jobs:
 
       - name: Download task definition
         run: |
-                aws ecs describe-task-definition --task-definition service --query aws_ecs_task_definition-1 > task-definition.json
-
+            aws ecs describe-task-definition --task-definition service --query taskDefinition > task-definition.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
@@ -52,12 +51,13 @@ jobs:
         with:
           task-definition: task-definition.json
           container-name: Hello-World
-          image: ${{ steps.build-image.outputs.image }}   
-
+          # image: ${{ steps.build-image.outputs.image }}   
+          image: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
+          
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: ${{ secrets.ECS_SERVICE }}
           cluster: ${{ secrets.ECS_CLUSTER }}
-          wait-for-service-stability: true   
+          wait-for-service-stability: true

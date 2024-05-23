@@ -77,7 +77,11 @@ resource "aws_iam_role_policy" "fargate" {
         "ecr:CompleteLayerUpload",
         "ecr:DescribeRepositories",
         "ecr:ListImages",
+        "logs:CreateLogStream",
+        "logs:CreateLogGroup"
         "ecr:DescribeImages",
+        "ecr:BatchGetImage",
+        "ecr:BatchCheckLayerAvailability"
         "ecr:GetAuthorizationToken",
         "ecr:GetDownloadUrlForLayer",
         "ecr:GetLifecyclePolicy"

@@ -5,7 +5,7 @@ resource "aws_lb" "lb" {
   name               = "LB-T"
   load_balancer_type = "application"
   security_groups    = [aws_security_group.sg.id]
-  subnets            = [aws_subnet.subnet1.id, aws_subnet.subnet2.id]
+
 
   tags = {
     Name = "web"
@@ -15,7 +15,7 @@ resource "aws_lb" "lb" {
 
 resource "aws_lb_target_group" "lb-tg" {
   name     = "tf-lb-tg"
-  port     = 80
+  port     = 3000
   protocol = "HTTP"
   target_type = "ip"
   vpc_id   = aws_vpc.vpc.id
@@ -27,7 +27,7 @@ resource "aws_lb_target_group" "lb-tg" {
 resource "aws_lb_listener" "lb_listner" {
   load_balancer_arn = aws_lb.lb.arn
   port              = 80
-  protocol          = "HTTP"
+  protocol          = "TCP"
   
   default_action {
     type             = "forward"

@@ -1,0 +1,56 @@
+{
+    "taskDefinitionArn": "arn:aws:ecs:ap-south-1:687157172064:task-definition/aws_ecs_task_definition-1:4",
+    "containerDefinitions": [
+        {
+            "name": "Hello-World",
+            "image": "687157172064.dkr.ecr.ap-south-1.amazonaws.com/nodejs_image",
+            "cpu": 256,
+            "memory": 512,
+            "portMappings": [
+                {
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "systemControls": []
+        }
+    ],
+    "family": "aws_ecs_task_definition-1",
+    "executionRoleArn": "arn:aws:iam::687157172064:role/serviceaccounts/fargate-role",
+    "networkMode": "awsvpc",
+    "revision": 4,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512",
+    "registeredAt": "2024-05-18T04:52:38.719Z",
+    "registeredBy": "arn:aws:iam::687157172064:user/saniya-shaikh",
+    "tags": []
+}
