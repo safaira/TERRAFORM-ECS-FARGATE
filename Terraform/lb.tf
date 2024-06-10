@@ -4,7 +4,7 @@
 resource "aws_lb" "lb" {
   name               = "LB-T"
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.sg.id]
+  security_groups    = [aws_security_group.load_balancer_security_group.id]
 
 
   tags = {
@@ -14,11 +14,11 @@ resource "aws_lb" "lb" {
 #  create target group of load banacer 
 
 resource "aws_lb_target_group" "lb_tg" {
-  name     = "tf-lb-tg"
-  port     = 80
-  protocol = "HTTP"
+  name        = "tf-lb-tg"
+  port        = 80
+  protocol    = "HTTP"
   target_type = "ip"
-  vpc_id   = aws_vpc.vpc.id
+  vpc_id      = aws_default_vpc.default_vpc.id
 
 }
 
