@@ -9,7 +9,7 @@ resource "aws_ecs_task_definition" "ecs_task" {
 
   container_definitions = jsonencode([
     {
-      name      = "Hello-World"
+      name      = "nodejs-task"
       image     = "${aws_ecr_repository.nodejs_image.repository_url}",
       cpu       = 256
       memory    = 512

@@ -5,6 +5,7 @@ resource "aws_lb" "lb" {
   name               = "LB-T"
   load_balancer_type = "application"
   security_groups    = [aws_security_group.load_balancer_security_group.id]
+  subnets            = [aws_default_subnet.default_subnet_a.id, aws_default_subnet.default_subnet_b.id]
 
 
   tags = {
@@ -31,7 +32,7 @@ resource "aws_lb_listener" "lb_listner" {
   
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.lb-tg.arn
+    target_group_arn = aws_lb_target_group.lb_tg.arn
   }
 }
 
@@ -69,7 +70,7 @@ resource "aws_security_group" "service_security_group" {
     from_port        = 0
     to_port          = 0
     protocol         = "-1"
-    security_groups  = aws_security_group.load_balancer_security_group.id
+    security_groups  = [aws_security_group.load_balancer_security_group.id]
   }
 
   egress {
